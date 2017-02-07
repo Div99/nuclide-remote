@@ -30,7 +30,7 @@ If you want to run the application manually instead of using docker-compose, the
 4. Select *Remote connection* and enter the connection information:
 
 - Username: `root`
-- Server: `container-ip`
+- Server: `localhost`
 - Initial Directory: `/app`
 - Password: `nuclide`
 - SSH Port: `9091`
@@ -45,13 +45,18 @@ After pressing ok the remote directory will show up and will be ready for editin
 The Nuclide instance can be customized by specifying environment variables on the first run:
 
 - `NUCLIDE_VERSION`: Nuclide module version to install via npm. No defaults.
+- `SYSTEM_USERNAME`: System username to configure and ssh with. Default: **root**
+- `SYSTEM_PASSWORD`: System password to configure and ssh with. Default: **nuclide**
 
 ### Specifying Environment variables on the Docker command line
 
 ```bash
-$ docker run -d --name nuclide-server -p 9090:9090 -p 9091:22 \
+$ docker run -d --name nuclide -p 9090:9090 -p 9091:22 \
+  --volume /app:/app \
   --env NUCLIDE_VERSION=0.202.0 \
-  jotadrilo/nuclide-remote
+  --env SYSTEM_USERNAME=foo \
+  --env SYSTEM_password=bar \
+  jotadrilo/nuclide-remote:latest
 ```
 
 # Details
@@ -64,7 +69,7 @@ The image ships the latest Nuclide IDE version. You can also specify a different
 
 Communication between Nuclide and Nuclide-remote uses 2 ports:
 
-- `ssh/23`: needed to start nuclide remote inside Docker container
+- `ssh/22`: needed to start nuclide remote inside Docker container
 - `9090`: the Nuclide communication channel
 
 # Issues

@@ -3,12 +3,8 @@ MAINTAINER Joseda <josriolop@gmail.com>
 
 ENV HOME /root
 
-# Install and configre SSH server
-RUN install_packages openssh-server && \
-    mkdir /var/run/sshd && \
-    echo 'root:nuclide' | chpasswd && \
-    sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
-    sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+# Install SSH server
+RUN install_packages openssh-server && mkdir /var/run/sshd
 
 # SSHD scrubs the environment
 # http://stackoverflow.com/questions/36292317/why-set-visible-now-in-etc-profile
@@ -33,7 +29,8 @@ RUN install_packages gcc make autoconf git python-dev libpython-dev autotools-de
     apt-get purge -y gcc make autoconf git python-dev libpython-dev autotools-dev automake
 
 # Install Nuclide Remote Server
-RUN npm install -g nuclide
+RUN npm install -g nuclide && \
+    rm -rf /root/.npm/*
 
 COPY rootfs /
 ENTRYPOINT ["/entrypoint.sh"]
