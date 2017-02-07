@@ -1,35 +1,81 @@
-# nuclide-remote
-The Nuclide-remote Docker container enables remote editing with Nuclide. 
+# What's nuclide-remote
+The Nuclide-remote Docker container enables remote editing with Nuclide.
 Further documentation about Nuclide can be found at:
 https://nuclide.io/docs/features/remote/
 
-### Version
+# TL;DR;
 
-Supports version 0.171.0 of Nuclide IDE. Can be adjusted in Dockerfile.
+```bash
+$ docker run -d -p 9090:9090 -p 9091:22 -v /app:/app jotadrilo/nuclide-remote:latest
+```
 
-### Connectivity
+# Prerequisites
 
-Communication between Nuclide and Nuclide-remote uses 2 ports:
-- ssh/23: needed to start nuclide remote inside Docker container
-- 9090: the Nuclide communication channel
+To run nuclide-remote you need [Docker Engine](https://www.docker.com/products/docker-engine) >= `1.10.0`. You will also need to install the *nuclide* [community package](https://nuclide.io/docs/features/remote/) to run with [Atom](https://atom.io/).
 
-### Example
+# How to use this image
 
-Setup access to a project at `/home/test/hello-world` on a remote host on `192.100.01.10`.
-Ssh will be run over port `9091` and `9090` will be used by Nuclide for communication.
+## Using the Docker Command Line
 
-On the remote host start this Docker container. Prebuilt image `marcel/nuclide-remote` available on Docker-Hub:
+If you want to run the application manually instead of using docker-compose, these are the basic steps you need to run:
 
-    sudo docker run -d -p 9090:9090 -p 9091:22 -v /home/test/hello-world:/hello-world marcel/nuclide-remote
+1. Run the Nuclide container:
 
-On the local machine start Nuclide, select *Packages/Connect..* and enter the connection information:
+  ```bash
+  $ docker run -d -p 9090:9090 -p 9091:22 -v /app:/app jotadrilo/nuclide-remote:latest
+  ```
+
+2. On the local machine start Atom
+3. Open the *Home* pane.
+4. Select *Remote connection* and enter the connection information:
 
 - Username: `root`
-- Server: `192.100.01.10`
-- Initial Directory: `/hello-world`
+- Server: `container-ip`
+- Initial Directory: `/app`
 - Password: `nuclide`
 - SSH Port: `9091`
 - Remote Server Command: `nuclide-start-server -p 9090`
 
-After pressing ok the remote directory will show up in navigator and will be ready for editing.
+After pressing ok the remote directory will show up and will be ready for editing.
 
+# Configuration
+
+## Environment variables
+
+The Nuclide instance can be customized by specifying environment variables on the first run:
+
+- `NUCLIDE_VERSION`: Nuclide module version to install via npm. No defaults.
+
+### Specifying Environment variables on the Docker command line
+
+```bash
+$ docker run -d --name nuclide-server -p 9090:9090 -p 9091:22 \
+  --env NUCLIDE_VERSION=0.202.0 \
+  jotadrilo/nuclide-remote
+```
+
+# Details
+
+## Version
+
+The image ships the latest Nuclide IDE version. You can also specify a different version at runtime by setting an environment variable. See [Environment variables](#environment-variables) section for more info.
+
+## Connectivity
+
+Communication between Nuclide and Nuclide-remote uses 2 ports:
+
+- `ssh/23`: needed to start nuclide remote inside Docker container
+- `9090`: the Nuclide communication channel
+
+# Issues
+
+If you encountered a problem running this container, you can file an [issue](https://github.com/jotadrilo/nuclide-remote/issues). For us to provide better support, be sure to include the following information in your issue:
+
+- Host OS and version
+- Docker version (`$ docker version`)
+- Output of `$ docker info`
+- The command you used to run the container, and any relevant output you saw (masking any sensitive information)
+
+# Contributing
+
+I'd love for you to contribute to this container. You can request new features by creating an [issue](https://github.com/jotadrilo/nuclide-remote/issues), or submit a [pull request](https://github.com/jotadrilo/nuclide-remote/pulls) with your contribution.
