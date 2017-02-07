@@ -31,9 +31,10 @@ RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
 RUN apt-get install -y nodejs
 
 # Install Nuclide Remote Server
-RUN npm install -g nuclide@0.171.0
+RUN npm install -g nuclide
+
+COPY rootfs /
 
 # Start ssh service
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/usr/sbin/sshd", "-D"]
-
-
