@@ -1,40 +1,40 @@
-FROM ubuntu:16.04
+FROM bitnami/minideb
+MAINTAINER Joseda <josriolop@gmail.com>
 
 ENV HOME /root
-ENV DEBIAN_FRONTEND noninteractive
-
-RUN apt-get update -qq
 
 # Install and configre SSH server
-RUN apt-get install -y openssh-server
-RUN mkdir /var/run/sshd
-RUN echo 'root:nuclide' | chpasswd
-RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
-RUN sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+RUN install_packages openssh-server && \
+    mkdir /var/run/sshd && \
+    echo 'root:nuclide' | chpasswd && \
+    sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config && \
+    sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd
+
+# SSHD scrubs the environment
+# http://stackoverflow.com/questions/36292317/why-set-visible-now-in-etc-profile
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
-# Install Dev SDK
-RUN apt-get -y install gcc make autoconf git python-dev libpython-dev
+# Install Node.js
+RUN install_packages curl ca-certificates && \
+    curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
+    install_packages nodejs
 
 # Install Watchman
-RUN git clone https://github.com/facebook/watchman.git \
-	&& cd watchman \
-	&& git checkout v4.5.0 \
-	&& ./autogen.sh \
-	&& ./configure \
-	&& make && make install
-
-# Install Node.js
-RUN apt-get install -y curl
-RUN curl -sL https://deb.nodesource.com/setup_6.x | bash -
-RUN apt-get install -y nodejs
+ENV WATCHMAN_VERSION v4.5.0
+RUN install_packages gcc make autoconf git python-dev libpython-dev autotools-dev automake && \
+    git clone https://github.com/facebook/watchman.git && \
+    cd watchman && \
+    git checkout ${WATCHMAN_VERSION} && \
+    ./autogen.sh && \
+    ./configure && \
+    make && \
+    make install && \
+    apt-get purge -y gcc make autoconf git python-dev libpython-dev autotools-dev automake
 
 # Install Nuclide Remote Server
 RUN npm install -g nuclide
 
 COPY rootfs /
-
-# Start ssh service
 ENTRYPOINT ["/entrypoint.sh"]
 CMD ["/usr/sbin/sshd", "-D"]
