@@ -1,7 +1,7 @@
 FROM jotadrilo/watchman:latest
 MAINTAINER Joseda <josriolop@gmail.com>
 
-ENV IMAGE_NUCLIDE_VERSION=0.204.0 \
+ENV IMAGE_NUCLIDE_VERSION=0.205.0 \
     HOME=/root
 
 # Install SSH server
