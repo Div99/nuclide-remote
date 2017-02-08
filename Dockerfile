@@ -1,4 +1,4 @@
-FROM bitnami/minideb
+FROM jotadrilo/watchman:latest
 MAINTAINER Joseda <josriolop@gmail.com>
 
 ENV HOME /root
@@ -15,18 +15,6 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 RUN install_packages curl ca-certificates && \
     curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
     install_packages nodejs
-
-# Install Watchman
-ENV WATCHMAN_VERSION v4.5.0
-RUN install_packages gcc make autoconf git python-dev libpython-dev autotools-dev automake && \
-    git clone https://github.com/facebook/watchman.git && \
-    cd watchman && \
-    git checkout ${WATCHMAN_VERSION} && \
-    ./autogen.sh && \
-    ./configure && \
-    make && \
-    make install && \
-    apt-get purge -y gcc make autoconf git python-dev libpython-dev autotools-dev automake
 
 # Install Nuclide Remote Server
 RUN npm install -g nuclide && \
