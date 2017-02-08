@@ -1,7 +1,8 @@
 FROM jotadrilo/watchman:latest
 MAINTAINER Joseda <josriolop@gmail.com>
 
-ENV HOME /root
+ENV IMAGE_NUCLIDE_VERSION=0.204.0 \
+    HOME=/root
 
 # Install SSH server
 RUN install_packages openssh-server && mkdir /var/run/sshd
@@ -17,7 +18,7 @@ RUN install_packages curl ca-certificates && \
     install_packages nodejs
 
 # Install Nuclide Remote Server
-RUN npm install -g nuclide && \
+RUN npm install -g nuclide@${IMAGE_NUCLIDE_VERSION} && \
     rm -rf /root/.npm/*
 
 COPY rootfs /

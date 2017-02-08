@@ -22,10 +22,7 @@ if [[ "$1" == "/usr/sbin/sshd" ]]; then
     sed -i 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' /etc/pam.d/sshd
 
     # Update nuclide module
-    if [[ -z "$NUCLIDE_VERSION" ]]; then
-        echo " --> Updating nuclide module"
-        npm update -g nuclide
-    else
+    if [[ -n "$NUCLIDE_VERSION" ]]; then
         echo " --> Uninstalling current nuclide module"
         # Clean dependencies to avoid installation issues
         npm uninstall -g nuclide
