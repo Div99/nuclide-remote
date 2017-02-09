@@ -45,8 +45,9 @@ After pressing ok the remote directory will show up and will be ready for editin
 The Nuclide instance can be customized by specifying environment variables on the first run:
 
 - `NUCLIDE_VERSION`: Nuclide module version to install via npm. No defaults.
-- `SYSTEM_USERNAME`: System username to configure and ssh with. Default: **root**
-- `SYSTEM_PASSWORD`: System password to configure and ssh with. Default: **nuclide**
+- `USERNAME`: System username to configure and ssh with. Default: **root**
+- `PASSWORD`: System password to configure and ssh with. Default: **nuclide**
+- `AUTHORIZED_KEYS`: Base64-encoded authorized_keys file. No defaults.
 
 ### Specifying Environment variables on the Docker command line
 
@@ -54,8 +55,9 @@ The Nuclide instance can be customized by specifying environment variables on th
 $ docker run -d --name nuclide -p 9090:9090 -p 9091:22 \
   --volume /app:/app \
   --env NUCLIDE_VERSION=0.202.0 \
-  --env SYSTEM_USERNAME=foo \
-  --env SYSTEM_password=bar \
+  --env USERNAME=foo \
+  --env PASSWORD=bar \
+  --env AUTHORIZED_KEYS=`base64 ~/.ssh/authorized_keys` \
   jotadrilo/nuclide-remote:latest
 ```
 
