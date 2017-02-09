@@ -14,8 +14,8 @@ function updateDockerfile(tag) {
   });
 }
 
-function getLatestWatchmanTag(callback) {
-  return https.request({
+function getLatestNuclideTag(callback) {
+  let options = {
     hostname: 'api.github.com',
     port: 443,
     path: '/repos/facebook/nuclide/tags',
@@ -23,7 +23,13 @@ function getLatestWatchmanTag(callback) {
     headers: {
       'user-agent': "This-is-a-valid-agent-for-GitHub-API"
     }
-  }, res => {
+  };
+
+  if (process.env.GH_OAUTH_TOKEN && process.env.GH_OAUTH_TOKEN.length > 0) {
+    options.headers.Authorization = `token ${process.env.GH_OAUTH_TOKEN}`;
+  }
+
+  return https.request(options, res => {
     // Consume data from the stream
     var response = '';
     res.on('data', (d) => {
@@ -32,12 +38,15 @@ function getLatestWatchmanTag(callback) {
 
     // Once all the data in the stream has been consumed
     res.on('end', () => {
-      // console.log(JSON.stringify(data, null, 2));
-      const latestTag = JSON.parse(response).map(t => t.name).sort().reverse()[0];
+      try {
+        const latestTag = JSON.parse(response).map(t => t.name).sort().reverse()[0];
 
-      // If the tag is stable, update dockerfile
-      if (Array.isArray(latestTag.match(/^((?!rc).)*$/))) {
-        callback(latestTag);
+        // If the tag is stable, update dockerfile
+        if (Array.isArray(latestTag.match(/^((?!rc).)*$/))) {
+          callback(latestTag);
+        }
+      } catch (e) {
+        throw new Error(e)
       }
     });
   }).on('error', e => {
@@ -45,4 +54,4 @@ function getLatestWatchmanTag(callback) {
   }).end();
 }
 
-getLatestWatchmanTag(updateDockerfile);
+getLatestNuclideTag(updateDockerfile);
