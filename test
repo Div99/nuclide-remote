@@ -1,22 +1,17 @@
 #!/usr/bin/env bats
 
-
 source ./utils
 
 setup () {
     status "Query GitHub API to get the latest stable tag"
-    export IMAGE_TAG=$(latestTag)
-    msg $IMAGE_TAG
-}
-
-run () {
-    docker run --rm "$IMAGE_NAME:$IMAGE_TAG" "$@"
+    IMAGE_TAG=$(latestTag)
+    msg ${IMAGE_TAG:-"Not found"}
 }
 
 @test "nuclide-start-server is in PATH" {
    run which nuclide-start-server >/dev/null 2>&1
 }
 
-@test "nuclide module version" {
+@test "nuclide module version matches latest" {
    [ "$(run npm list -g nuclide | grep -oE '@[0-9\.]+' | tr -d '@\n')" == "$IMAGE_TAG" ]
 }
