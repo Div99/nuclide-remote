@@ -13,11 +13,6 @@ run () {
     docker run --rm "$IMAGE_NAME:$IMAGE_TAG" "$@"
 }
 
-test () {
-    bash -c "$@"
-    echo "OK"
-}
-
 @test "nuclide-start-server is in PATH" {
    run which nuclide-start-server >/dev/null 2>&1
 }
