@@ -54,10 +54,10 @@ The Nuclide instance can be customized by specifying environment variables on th
 ```bash
 $ docker run -d --name nuclide -p 9090:9090 -p 9091:22 \
   --volume /app:/app \
-  --env NUCLIDE_VERSION=0.202.0 \
+  --env NUCLIDE_VERSION=0.205.0\
   --env USERNAME=foo \
   --env PASSWORD=bar \
-  --env AUTHORIZED_KEYS=`base64 ~/.ssh/authorized_keys` \
+  --env AUTHORIZED_KEYS="`base64 ~/.ssh/authorized_keys`" \
   jotadrilo/nuclide-remote:latest
 ```
 
