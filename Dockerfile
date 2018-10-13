@@ -4,15 +4,28 @@ ENV IMAGE_NUCLIDE_VERSION=0.357.0 \
     WATCHMAN_VERSION=v4.9.0 \
     HOME=/root
 
+BUILD_PACKAGES=(\
+    libssl-dev \
+    pkg-config \
+    libtool \
+    ca-certificates \
+    git \
+    build-essential 
+    autoconf \
+    python-dev \
+    libpython-dev \
+    autotools-dev \
+    automake)
+
 # Install Watchman and System packages required
-RUN install_packages libssl-dev pkg-config libtool ca-certificates git build-essential autoconf python-dev libpython-dev autotools-dev automake \
+RUN install_packages $BUILD_PACKAGES \
     && git clone https://github.com/facebook/watchman.git \
     && cd watchman \
     && git checkout ${WATCHMAN_VERSION} \
     && ./autogen.sh \
     && ./configure \
     && make && make install \
-    && apt-get purge -y libssl-dev pkg-config libtool git build-essential autoconf python-dev libpython-dev autotools-dev automake \
+    && apt-get remove --purge -y $BUILD_PACKAGES $(apt-mark showauto) && rm -rf /var/lib/apt/lists/* \
     && cd / && rm -rf watchman-${WATCHMAN_VERSION}
 
 # Install SSH server
@@ -24,7 +37,7 @@ ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
 # Install Node.js
-RUN install_packages curl ca-certificates && \
+RUN install_packages curl ca-certificates gnupg2 && \
     curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
     install_packages nodejs
 
