@@ -3,16 +3,14 @@ FROM debian:jessie
 COPY rootf /usr/local/bin
 
 ENV IMAGE_WATCHMAN_VERSION=v4.9.0 \
-    HOME=/root
-    
-ENV IMAGE_NUCLIDE_VERSION=0.357.0 \
+    IMAGE_NUCLIDE_VERSION=0.357.0 \
     HOME=/root
     
 # Configure Node.js repository
 RUN node_setup_8.x
 
 # System packages required
-RUN install_packages nodejs  gcc make automake autoconf git python-dev libpython-dev
+RUN install_packages nodejs gcc make automake autoconf git python-dev libpython-dev
 
 # Install Watchman
 RUN git clone https://github.com/facebook/watchman.git \
