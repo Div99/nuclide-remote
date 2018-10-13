@@ -5,7 +5,7 @@ ENV IMAGE_NUCLIDE_VERSION=0.357.0 \
     HOME=/root
 
 # Install Watchman and System packages required
-RUN install_packages gcc make automake autoconf git python-dev libpython-dev
+RUN install_packages gcc make automake autoconf git python-dev libpython-dev \
     && git clone https://github.com/facebook/watchman.git \
     && cd watchman \
     && git checkout ${WATCHMAN_VERSION} \
