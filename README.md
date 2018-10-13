@@ -6,7 +6,7 @@ https://nuclide.io/docs/features/remote/
 # TL;DR;
 
 ```bash
-$ docker run -d -p 9090:9090 -p 9091:22 -v /app:/app jotadrilo/nuclide-remote:latest
+$ docker run -d -p 9090:9090 -p 9091:22 -v  ~/projects/test-project:/projects/test-project --name nuclide-remote  jotadrilo/nuclide-remote:latest
 ```
 
 # Prerequisites
@@ -19,10 +19,11 @@ To run nuclide-remote you need [Docker Engine](https://www.docker.com/products/d
 
 If you want to run the application manually instead of using docker-compose, these are the basic steps you need to run:
 
-1. Run the Nuclide container:
-
+1.  Setup container on remote server
+  - Find the path on your remote server that contains the project you want to open. In this example, it will be `~/projects/test-project`.
+  - On the remote host start the Docker container:
   ```bash
-  $ docker run -d -p 9090:9090 -p 9091:22 -v /app:/app jotadrilo/nuclide-remote:latest
+  $ docker run -d -p 9090:9090 -p 9091:22 -v ~/projects/test-project:/projects/test-project --name nuclide-remote jotadrilo/nuclide-remote:latest
   ```
 
 2. On the local machine start Atom
@@ -30,8 +31,8 @@ If you want to run the application manually instead of using docker-compose, the
 4. Select *Remote connection* and enter the connection information:
 
 - Username: `root`
-- Server: `localhost`
-- Initial Directory: `/app`
+- Server: the address of your server. This can be a domain name based or IP address.
+- Initial Directory: the path on your remote server that contains the project you want to open.
 - Password: `nuclide`
 - SSH Port: `9091`
 - Remote Server Command: `nuclide-start-server -p 9090`
