@@ -1,7 +1,7 @@
 FROM jotadrilo/watchman:latest
 MAINTAINER Joseda <josriolop@gmail.com>
 
-ENV IMAGE_NUCLIDE_VERSION=0.205.0 \
+ENV IMAGE_NUCLIDE_VERSION=0.357.0 \
     HOME=/root
 
 # Install SSH server
@@ -14,7 +14,7 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 
 # Install Node.js
 RUN install_packages curl ca-certificates && \
-    curl -sL https://deb.nodesource.com/setup_6.x | bash - && \
+    curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
     install_packages nodejs
 
 # Install Nuclide Remote Server
