@@ -4,7 +4,7 @@ ENV IMAGE_NUCLIDE_VERSION=0.357.0 \
     WATCHMAN_VERSION=v4.9.0 \
     HOME=/root
 
-BUILD_PACKAGES=(\
+ENV BUILD_PACKAGES=(\
     libssl-dev \
     pkg-config \
     libtool \
