@@ -5,6 +5,7 @@ https://nuclide.io/docs/features/remote/
 
 # TL;DR;
 
+SSH into server and run:
 ```bash
 $ docker run -d -p 9090:9090 -p 9091:22 -v  ~/projects/test-project:/projects/test-project --name nuclide-remote  jotadrilo/nuclide-remote:latest
 ```
@@ -19,7 +20,7 @@ To run nuclide-remote you need [Docker Engine](https://www.docker.com/products/d
 
 If you want to run the application manually instead of using docker-compose, these are the basic steps you need to run:
 
-1.  Setup container on remote server
+1.  Setup container on remote server:
   - Find the path on your remote server that contains the project you want to open. In this example, it will be `~/projects/test-project`.
   - On the remote host start the Docker container:
   ```bash
