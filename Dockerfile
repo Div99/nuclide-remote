@@ -5,14 +5,14 @@ ENV IMAGE_NUCLIDE_VERSION=0.357.0 \
     HOME=/root
 
 # Install Watchman and System packages required
-RUN install_packages gcc make automake autoconf git python-dev libpython-dev \
+RUN install_packages libssl-dev pkg-config libtool ca-certificates git build-essential autoconf python-dev libpython-dev autotools-dev automake \
     && git clone https://github.com/facebook/watchman.git \
     && cd watchman \
     && git checkout ${WATCHMAN_VERSION} \
     && ./autogen.sh \
     && ./configure \
     && make && make install \
-    && apt-get purge -y gcc make automake autoconf git python-dev libpython-dev \
+    && apt-get purge -y libssl-dev pkg-config libtool git build-essential autoconf python-dev libpython-dev autotools-dev automake \
     && cd / && rm -rf watchman-${WATCHMAN_VERSION}
 
 # Install SSH server
@@ -27,7 +27,7 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 RUN install_packages curl ca-certificates && \
     curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
     install_packages nodejs
-    
+
 # Install Nuclide Remote Server
 RUN npm install -g nuclide@${IMAGE_NUCLIDE_VERSION} && \
     rm -rf /root/.npm/*
