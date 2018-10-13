@@ -89,4 +89,4 @@ If you encountered a problem running this container, you can file an [issue](htt
 
 # Contributing
 
-I'd love for you to contribute to this container. You can request new features by creating an [issue](https://github.com/jotadrilo/nuclide-remote/issues), or submit a [pull request](https://github.com/jotadrilo/nuclide-remote/pulls) with your contribution.
+I'd love for you to contribute to this container. You can request new features by creating an [issue](https://github.com/div99/nuclide-remote/issues), or submit a [pull request](https://github.com/div99/nuclide-remote/pulls) with your contribution.
