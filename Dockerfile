@@ -1,25 +1,20 @@
-FROM debian:jessie
+FROM bitnami/minideb
 
-COPY rootf /usr/local/bin
-
-ENV IMAGE_WATCHMAN_VERSION=v4.9.0 \
-    IMAGE_NUCLIDE_VERSION=0.357.0 \
+ENV WATCHMAN_VERSION=v4.9.0 \
+    NUCLIDE_VERSION=0.357.0 \
     HOME=/root
-    
-# Configure Node.js repository
-RUN node_setup_8.x
 
-# System packages required
-RUN install_packages nodejs gcc make automake autoconf git python-dev libpython-dev
+# Install Watchman and System packages required
+RUN install_packages gcc make automake autoconf git python-dev libpython-dev
+    && git clone https://github.com/facebook/watchman.git \
+    && cd watchman \
+    && git checkout ${WATCHMAN_VERSION} \
+    && ./autogen.sh \
+    && ./configure \
+    && make && make install \
+    && apt-get purge -y gcc make automake autoconf git python-dev libpython-dev \
+    && cd / && rm -rf watchman-${WATCHMAN_VERSION}
 
-# Install Watchman
-RUN git clone https://github.com/facebook/watchman.git \
-	&& cd watchman \
-	&& git checkout ${IMAGE_WATCHMAN_VERSION} \
-	&& ./autogen.sh \
-	&& ./configure \
-	&& make && make install
-    
 # Install SSH server
 RUN install_packages openssh-server && mkdir /var/run/sshd
 
@@ -28,8 +23,13 @@ RUN install_packages openssh-server && mkdir /var/run/sshd
 ENV NOTVISIBLE "in users profile"
 RUN echo "export VISIBLE=now" >> /etc/profile
 
+# Install Node.js
+RUN install_packages curl ca-certificates && \
+    curl -sL https://deb.nodesource.com/setup_8.x | bash - && \
+    install_packages nodejs
+    
 # Install Nuclide Remote Server
-RUN npm install -g nuclide@${IMAGE_NUCLIDE_VERSION} && \
+RUN npm install -g nuclide@${NUCLIDE_VERSION} && \
     rm -rf /root/.npm/*
 
 COPY rootfs /
