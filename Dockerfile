@@ -1,7 +1,7 @@
 FROM bitnami/minideb
 
-ENV WATCHMAN_VERSION=v4.9.0 \
-    NUCLIDE_VERSION=0.357.0 \
+ENV IMAGE_NUCLIDE_VERSION=0.357.0 \
+    WATCHMAN_VERSION=v4.9.0 \
     HOME=/root
 
 # Install Watchman and System packages required
@@ -29,7 +29,7 @@ RUN install_packages curl ca-certificates && \
     install_packages nodejs
     
 # Install Nuclide Remote Server
-RUN npm install -g nuclide@${NUCLIDE_VERSION} && \
+RUN npm install -g nuclide@${IMAGE_NUCLIDE_VERSION} && \
     rm -rf /root/.npm/*
 
 COPY rootfs /
