@@ -10,7 +10,7 @@ msg ${IMAGE_TAG:-"Not found"}
 
 if [[ -n "${IMAGE_TAG}" ]]; then
     status "Update Dockerfile with the latest stable tag"
-    sed "s|ENV\s*NUCLIDE_VERSION=.*|ENV NUCLIDE_VERSION=$IMAGE_TAG \\\|g" -i Dockerfile
+    sed "s|ENV\s*IMAGE_NUCLIDE_VERSION=.*|ENV IMAGE_NUCLIDE_VERSION=$IMAGE_TAG \\\|g" -i Dockerfile
     msg OK
 
     status "Build image $IMAGE_NAME:$IMAGE_TAG"
