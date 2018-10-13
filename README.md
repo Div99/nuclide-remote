@@ -1,4 +1,4 @@
-[![Docker Automated build](https://img.shields.io/docker/automated/jrottenberg/ffmpeg.svg)](https://hub.docker.com/r/joseajp/nuclide-remote/)
+[![Docker Automated build](https://img.shields.io/docker/automated/jrottenberg/ffmpeg.svg)](https://hub.docker.com/r/div99/nuclide-remote/)
 
 # What's nuclide-remote
 The Nuclide-remote Docker container enables remote editing with Nuclide.
