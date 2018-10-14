@@ -4,7 +4,8 @@ ENV IMAGE_NUCLIDE_VERSION=0.357.0 \
     WATCHMAN_VERSION=v4.9.0 \
     HOME=/root
 
-ENV BUILD_PACKAGES=(\
+# Install Watchman and System packages required
+RUN BUILD_PACKAGES=(\
     libssl-dev \
     pkg-config \
     libtool \
@@ -15,18 +16,16 @@ ENV BUILD_PACKAGES=(\
     python-dev \
     libpython-dev \
     autotools-dev \
-    automake)
-
-# Install Watchman and System packages required
-RUN install_packages "${BUILD_PACKAGES[@]}" \
-    && git clone https://github.com/facebook/watchman.git \
-    && cd watchman \
-    && git checkout ${WATCHMAN_VERSION} \
-    && ./autogen.sh \
-    && ./configure \
-    && make && make install \
-    && apt-get remove --purge -y $BUILD_PACKAGES $(apt-mark showauto) && rm -rf /var/lib/apt/lists/* \
-    && cd / && rm -rf watchman-${WATCHMAN_VERSION}
+    automake) && \
+    install_packages "${BUILD_PACKAGES[@]}" && \
+    git clone https://github.com/facebook/watchman.git &&  \
+    cd watchman && \
+    git checkout ${WATCHMAN_VERSION} && \
+    ./autogen.sh && \
+    ./configure && \
+    make && make install && \
+    apt-get remove --purge -y $BUILD_PACKAGES $(apt-mark showauto) && rm -rf /var/lib/apt/lists/* && \
+    cd / && rm -rf watchman-${WATCHMAN_VERSION}
 
 # Install SSH server
 RUN install_packages openssh-server && mkdir /var/run/sshd
