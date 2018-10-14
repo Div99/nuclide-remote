@@ -18,7 +18,7 @@ ENV BUILD_PACKAGES=(\
     automake)
 
 # Install Watchman and System packages required
-RUN install_packages $BUILD_PACKAGES \
+RUN install_packages "${BUILD_PACKAGES[@]}" \
     && git clone https://github.com/facebook/watchman.git \
     && cd watchman \
     && git checkout ${WATCHMAN_VERSION} \
