@@ -7,17 +7,8 @@ ENV IMAGE_NUCLIDE_VERSION=0.357.0 \
 RUN install_packages debian-archive-keyring
 
 # Install Watchman and System packages required
-RUN install_packages libssl-dev \
-    pkg-config \
-    libtool \
-    ca-certificates \
-    git \
-    build-essential \
-    autoconf \
-    python-dev \
-    libpython-dev \
-    autotools-dev \
-    automake && \
+RUN install_packages libssl-dev pkg-config libtool ca-certificates git build-essential \
+    autoconf python-dev libpython-dev autotools-dev automake && \
     \
     git clone https://github.com/facebook/watchman.git &&  \
     cd watchman && \
@@ -26,17 +17,9 @@ RUN install_packages libssl-dev \
     ./configure && \
     make && make install && \
     \
-    apt-get remove --purge -y libssl-dev \
-    pkg-config \
-    libtool \
-    git \
-    build-essential \
-    autoconf \
-    python-dev \
-    libpython-dev \
-    autotools-dev \
-    automake && \
-    apt autoremove && rm -rf /var/lib/apt/lists/* && \
+    apt-get remove --purge -y libssl-dev pkg-config libtool git build-essential autoconf \
+    python-dev libpython-dev autotools-dev automake && \
+    apt-get autoremove -y && rm -rf /var/lib/apt/lists/* && \
     cd / && rm -rf watchman
 
 # Install SSH server
