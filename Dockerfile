@@ -5,7 +5,7 @@ ENV IMAGE_NUCLIDE_VERSION=0.357.0 \
     HOME=/root
 
 # Install Watchman and System packages required
-RUN BUILD_PACKAGES=(\
+RUN BUILD_PACKAGES= \
     libssl-dev \
     pkg-config \
     libtool \
@@ -16,7 +16,7 @@ RUN BUILD_PACKAGES=(\
     python-dev \
     libpython-dev \
     autotools-dev \
-    automake) && \
+    automake && \
     install_packages "${BUILD_PACKAGES[@]}" && \
     git clone https://github.com/facebook/watchman.git &&  \
     cd watchman && \
