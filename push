@@ -9,7 +9,7 @@ IMAGE_TAG=$(latestTag)
 msg $IMAGE_TAG
 
 status "Login DockerHub"
-docker login -u $DOCKER_USERNAME --password-stdin
+echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
 msg OK
 
 status "Pushing $IMAGE_NAME:$IMAGE_TAG"
