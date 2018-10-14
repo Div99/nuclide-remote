@@ -23,7 +23,7 @@ if [[ "$1" == "/usr/sbin/sshd" ]]; then
     sed -i 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' /etc/pam.d/sshd
     # Allow root login
     if [[ "$USERNAME" == "root" ]]; then
-        sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+        sed -i 's/PermitRootLogin .*/PermitRootLogin yes/' /etc/ssh/sshd_config
     fi
 
     # Configure authorized_keys
