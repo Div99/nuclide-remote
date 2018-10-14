@@ -1,6 +1,6 @@
 #!/bin/bash
 
-set -eu
+set -e
 
 source ./utils
 
@@ -10,7 +10,6 @@ msg $IMAGE_TAG
 
 status "Login DockerHub"
 docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-echo $DOCKER_PASSWORD
 msg OK
 
 status "Pushing $IMAGE_NAME:$IMAGE_TAG"
