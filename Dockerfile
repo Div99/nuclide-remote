@@ -24,7 +24,7 @@ RUN BUILD_PACKAGES=(\
     ./autogen.sh && \
     ./configure && \
     make && make install && \
-    apt-get remove --purge -y $BUILD_PACKAGES $(apt-mark showauto) && rm -rf /var/lib/apt/lists/* && \
+    apt-get remove --purge -y "${BUILD_PACKAGES[@]}" $(apt-mark showauto) && rm -rf /var/lib/apt/lists/* && \
     cd / && rm -rf watchman-${WATCHMAN_VERSION}
 
 # Install SSH server
