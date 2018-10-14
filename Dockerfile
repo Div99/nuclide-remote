@@ -16,16 +16,17 @@ RUN install_packages libssl-dev \
     libpython-dev \
     autotools-dev \
     automake && \
+
     git clone https://github.com/facebook/watchman.git &&  \
     cd watchman && \
     git checkout ${WATCHMAN_VERSION} && \
     ./autogen.sh && \
     ./configure && \
     make && make install && \
+
     apt-get remove --purge -y libssl-dev \
     pkg-config \
     libtool \
-    ca-certificates \
     git \
     build-essential \
     autoconf \
