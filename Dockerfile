@@ -11,7 +11,7 @@ RUN BUILD_PACKAGES=(\
     libtool \
     ca-certificates \
     git \
-    build-essential 
+    build-essential \
     autoconf \
     python-dev \
     libpython-dev \
