@@ -34,8 +34,8 @@ RUN install_packages libssl-dev \
     libpython-dev \
     autotools-dev \
     automake && \
-    $(apt-mark showauto) && rm -rf /var/lib/apt/lists/* && \
-    cd / && rm -rf watchman-${WATCHMAN_VERSION}
+    rm -rf /var/lib/apt/lists/* && \
+    cd / && rm -rf watchman
 
 # Install SSH server
 RUN install_packages openssh-server && mkdir /var/run/sshd

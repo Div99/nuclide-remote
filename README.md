@@ -62,7 +62,7 @@ $ docker run -d --name nuclide -p 9090:9090 -p 9091:22 \
   --env USERNAME=foo \
   --env PASSWORD=bar \
   --env AUTHORIZED_KEYS="`base64 ~/.ssh/authorized_keys`" \
-  jotadrilo/nuclide-remote:latest
+  div99/nuclide-remote:latest
 ```
 
 # Details
