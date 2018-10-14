@@ -17,7 +17,7 @@ RUN install_packages libssl-dev pkg-config libtool ca-certificates git build-ess
     ./configure && \
     make && make install && \
     \
-    apt-get remove --purge -y libssl-dev pkg-config libtool git build-essential autoconf \
+    apt-get remove --purge -y libssl-dev pkg-config libtool build-essential autoconf \
     python-dev libpython-dev autotools-dev automake && \
     apt-get autoremove -y && rm -rf /var/lib/apt/lists/* && \
     cd / && rm -rf watchman
