@@ -16,14 +16,14 @@ RUN install_packages libssl-dev \
     libpython-dev \
     autotools-dev \
     automake && \
-
+    \
     git clone https://github.com/facebook/watchman.git &&  \
     cd watchman && \
     git checkout ${WATCHMAN_VERSION} && \
     ./autogen.sh && \
     ./configure && \
     make && make install && \
-
+    \
     apt-get remove --purge -y libssl-dev \
     pkg-config \
     libtool \
@@ -34,7 +34,7 @@ RUN install_packages libssl-dev \
     libpython-dev \
     autotools-dev \
     automake && \
-    rm -rf /var/lib/apt/lists/* && \
+    apt autoremove && rm -rf /var/lib/apt/lists/* && \
     cd / && rm -rf watchman
 
 # Install SSH server
