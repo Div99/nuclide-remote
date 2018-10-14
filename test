@@ -8,6 +8,10 @@ setup () {
     msg ${IMAGE_TAG:-"Not found"}
 }
 
+@test "watchman is in PATH" {
+   run which watchman >/dev/null 2>&1
+}
+
 @test "nuclide-start-server is in PATH" {
    run which nuclide-start-server >/dev/null 2>&1
 }
