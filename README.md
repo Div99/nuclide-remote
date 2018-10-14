@@ -1,3 +1,6 @@
+[![Docker Automated build](https://img.shields.io/docker/automated/jrottenberg/ffmpeg.svg)](https://hub.docker.com/r/div99/nuclide-remote/)
+[![Build Status](https://travis-ci.com/Div99/nuclide-remote.svg?branch=master)](https://travis-ci.com/Div99/nuclide-remote)
+
 # What's nuclide-remote
 The Nuclide-remote Docker container enables remote editing with Nuclide.
 Further documentation about Nuclide can be found at:
@@ -5,8 +8,9 @@ https://nuclide.io/docs/features/remote/
 
 # TL;DR;
 
+SSH into server and run:
 ```bash
-$ docker run -d -p 9090:9090 -p 9091:22 -v /app:/app jotadrilo/nuclide-remote:latest
+$ docker run -d -p 9090:9090 -p 9091:22 -v ~/projects/test-project:/projects/test-project --name nuclide-remote div99/nuclide-remote:latest
 ```
 
 # Prerequisites
@@ -19,10 +23,11 @@ To run nuclide-remote you need [Docker Engine](https://www.docker.com/products/d
 
 If you want to run the application manually instead of using docker-compose, these are the basic steps you need to run:
 
-1. Run the Nuclide container:
-
+1.  Setup container on remote server:
+  - Find the path on your remote server that contains the project you want to open. In this example, it will be `~/projects/test-project`.
+  - On the remote host start the Docker container:
   ```bash
-  $ docker run -d -p 9090:9090 -p 9091:22 -v /app:/app jotadrilo/nuclide-remote:latest
+  $ docker run -d -p 9090:9090 -p 9091:22 -v ~/projects/test-project:/projects/test-project --name nuclide-remote div99/nuclide-remote:latest
   ```
 
 2. On the local machine start Atom
@@ -30,8 +35,8 @@ If you want to run the application manually instead of using docker-compose, the
 4. Select *Remote connection* and enter the connection information:
 
 - Username: `root`
-- Server: `localhost`
-- Initial Directory: `/app`
+- Server: the address of your server. This can be a domain name based or IP address.
+- Initial Directory: the path on your remote server that contains the project you want to open.
 - Password: `nuclide`
 - SSH Port: `9091`
 - Remote Server Command: `nuclide-start-server -p 9090`
@@ -58,7 +63,7 @@ $ docker run -d --name nuclide -p 9090:9090 -p 9091:22 \
   --env USERNAME=foo \
   --env PASSWORD=bar \
   --env AUTHORIZED_KEYS="`base64 ~/.ssh/authorized_keys`" \
-  jotadrilo/nuclide-remote:latest
+  div99/nuclide-remote:latest
 ```
 
 # Details
@@ -76,7 +81,7 @@ Communication between Nuclide and Nuclide-remote uses 2 ports:
 
 # Issues
 
-If you encountered a problem running this container, you can file an [issue](https://github.com/jotadrilo/nuclide-remote/issues). For us to provide better support, be sure to include the following information in your issue:
+If you encountered a problem running this container, you can file an [issue](https://github.com/div99/nuclide-remote/issues). For better support, be sure to include the following information in your issue:
 
 - Host OS and version
 - Docker version (`$ docker version`)
@@ -85,4 +90,4 @@ If you encountered a problem running this container, you can file an [issue](htt
 
 # Contributing
 
-I'd love for you to contribute to this container. You can request new features by creating an [issue](https://github.com/jotadrilo/nuclide-remote/issues), or submit a [pull request](https://github.com/jotadrilo/nuclide-remote/pulls) with your contribution.
+I'd love for you to contribute to this container. You can request new features by creating an [issue](https://github.com/div99/nuclide-remote/issues), or submit a [pull request](https://github.com/div99/nuclide-remote/pulls) with your contribution.
