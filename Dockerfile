@@ -6,6 +6,22 @@ ENV IMAGE_NUCLIDE_VERSION=0.357.0 \
 
 RUN install_packages debian-archive-keyring
 
+# Install Miniconda Environment
+ENV PATH /opt/conda/bin:$PATH
+
+RUN apt-get update --fix-missing && \
+    apt-get install -y wget bzip2 ca-certificates curl git && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
+RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-4.5.11-Linux-x86_64.sh -O ~/miniconda.sh && \
+    /bin/bash ~/miniconda.sh -b -p /opt/conda && \
+    rm ~/miniconda.sh && \
+    /opt/conda/bin/conda clean -tipsy && \
+    ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
+    echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
+    echo "conda activate base" >> ~/.bashrc
+    
 # Install Watchman and System packages required
 RUN install_packages libssl-dev pkg-config libtool ca-certificates git build-essential \
     autoconf python-dev libpython-dev autotools-dev automake && \
