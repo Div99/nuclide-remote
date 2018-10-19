@@ -8,10 +8,12 @@ https://nuclide.io/docs/features/remote/
 
 # TL;DR;
 
-SSH into server and run:
+1. SSH into server and run:
 ```bash
 $ docker run -d -p 9090:9090 -p 9091:22 -v ~/projects/test-project:/projects/test-project --name nuclide-remote div99/nuclide-remote:latest
 ```
+
+2. Install `nuclide` package in Atom
 
 # Prerequisites
 
