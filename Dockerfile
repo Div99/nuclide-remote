@@ -1,6 +1,10 @@
 FROM bitnami/minideb
 
-ENV IMAGE_NUCLIDE_VERSION=0.357.0 \
+ENV EXTRA="/install"
+COPY utils "$EXTRA/"
+RUN /bin/bash -c "source $EXTRA/utils" && rm -rf "$EXTRA"
+
+ENV IMAGE_NUCLIDE_VERSION=$(latestTag) \
     WATCHMAN_VERSION=v4.9.0 \
     HOME=/root
 
