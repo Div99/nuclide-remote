@@ -1,6 +1,6 @@
 FROM bitnami/minideb
 
-RUN RUN /bin/bash -c "source ./utils"
+RUN /bin/bash -c "source ./utils"
 
 ENV IMAGE_NUCLIDE_VERSION=$(latestTag) \
     WATCHMAN_VERSION=v4.9.0 \
