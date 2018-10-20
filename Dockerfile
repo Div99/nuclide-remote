@@ -4,6 +4,8 @@ ENV IMAGE_NUCLIDE_VERSION=0.357.0 \
     WATCHMAN_VERSION=v4.9.0 \
     HOME=/root
 
+RUN install_packages debian-archive-keyring
+
 # Install Miniconda Environment
 ENV PATH /opt/conda/bin:$PATH
 
@@ -19,7 +21,7 @@ RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-4.5.11-Linux-x86
     ln -s /opt/conda/etc/profile.d/conda.sh /etc/profile.d/conda.sh && \
     echo ". /opt/conda/etc/profile.d/conda.sh" >> ~/.bashrc && \
     echo "conda activate base" >> ~/.bashrc
-    
+
 # Install Watchman and System packages required
 RUN install_packages libssl-dev pkg-config libtool ca-certificates git build-essential \
     autoconf python-dev libpython-dev autotools-dev automake && \
