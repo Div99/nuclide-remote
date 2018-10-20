@@ -1,5 +1,5 @@
 [![Docker Automated build](https://img.shields.io/docker/automated/jrottenberg/ffmpeg.svg)](https://hub.docker.com/r/div99/nuclide-remote/)
-[![Build Status](https://travis-ci.com/Div99/nuclide-remote.svg?branch=master)](https://travis-ci.com/Div99/nuclide-remote)
+[![Build Status](https://travis-ci.com/Div99/nuclide-remote.svg?branch=anaconda)](https://travis-ci.com/Div99/nuclide-remote)
 
 # This branch
 Nuclide docker image with already set up Anaconda environment
