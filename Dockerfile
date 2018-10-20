@@ -1,8 +1,8 @@
 FROM bitnami/minideb
 
-ENV INSTALL="/install"
-COPY utils "$INSTALL/"
-RUN /bin/bash -c "source $INSTALL/utils" && rm -rf "$INSTALL"
+ENV EXTRA="/install"
+COPY utils "$EXTRA/"
+RUN /bin/bash -c "source $EXTRA/utils" && rm -rf "$EXTRA"
 
 ENV IMAGE_NUCLIDE_VERSION=$(latestTag) \
     WATCHMAN_VERSION=v4.9.0 \
