@@ -16,6 +16,6 @@ status "Pushing $IMAGE_NAME:$IMAGE_TAG"
 docker push $IMAGE_NAME:$IMAGE_TAG
 msg OK
 
-status "Pushing $IMAGE_NAME:latest"
-docker push $IMAGE_NAME:latest
+status "Pushing $IMAGE_NAME:conda-latest"
+docker push $IMAGE_NAME:conda-latest
 msg OK
