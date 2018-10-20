@@ -6,8 +6,6 @@ ENV IMAGE_NUCLIDE_VERSION=$(latestTag) \
     WATCHMAN_VERSION=v4.9.0 \
     HOME=/root
 
-RUN install_packages debian-archive-keyring
-
 # Install Watchman and System packages required
 RUN install_packages libssl-dev pkg-config libtool ca-certificates git build-essential \
     autoconf python-dev libpython-dev autotools-dev automake && \
