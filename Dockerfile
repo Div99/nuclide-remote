@@ -12,7 +12,7 @@ ENV IMAGE_NUCLIDE_VERSION=$(latestTag) \
 ENV PATH /opt/conda/bin:$PATH
 
 RUN install_packages wget bzip2 ca-certificates curl git && \
-    apt-get clean && \
+    apt-get clean
 
 RUN wget --quiet https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O ~/miniconda.sh && \
     /bin/bash ~/miniconda.sh -b -p /opt/conda && \
