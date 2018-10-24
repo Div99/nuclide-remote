@@ -1,5 +1,7 @@
 #!/bin/bash
 
+install_packages jq
+
 # List tags in facebook/nuclide repository
 # https://developer.github.com/v3/repos/#list-tags
 tags () {
