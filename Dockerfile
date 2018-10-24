@@ -1,5 +1,6 @@
 FROM bitnami/minideb
 
+RUN install_packages jq
 ENV EXTRA="/install"
 COPY utils "$EXTRA/"
 RUN /bin/bash -c "source $EXTRA/utils" && rm -rf "$EXTRA"
